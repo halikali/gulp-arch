@@ -1,1 +1,3 @@
-console.log("hello .page.ts");
+import { user } from "../../common/common-example";
+document.body.innerText = user.name;
+console.log(user);
