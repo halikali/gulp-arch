@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2015", "DOM"],
+    "target": "es5",
+    "module": "es6",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "outDir": "dist/js",
+    "sourceMap": true,
+    "moduleResolution": "node"
+  },
+  "include": ["./src/scripts/**/*.ts"],
+  "exclude": ["**/*.spec.ts"]
+}
