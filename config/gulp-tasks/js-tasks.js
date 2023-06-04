@@ -19,11 +19,14 @@ function jsTask(platform) {
 
   return gulp
     .src(scriptFiles)
-    .pipe(gulpIf(isDevelopment, sourcemaps.init()))
+    .pipe(gulpIf(isDevelopment == true, sourcemaps.init()))
     .pipe(tsProject())
     .pipe(
       babel({
-        presets: ["@babel/preset-env"],
+        presets: [
+          ["@babel/preset-env", { modules: false }],
+          "@babel/preset-typescript",
+        ],
       })
     )
     .pipe(
@@ -42,7 +45,7 @@ function jsTask(platform) {
       )
     )
     .pipe(rename({ suffix: ".min" }))
-    .pipe(gulpIf(isDevelopment, sourcemaps.write(".")))
+    .pipe(gulpIf(isDevelopment == true, sourcemaps.write(".")))
     .pipe(gulp.dest(outputDir));
 }
 
