@@ -8,8 +8,7 @@ const autoprefixer = require("gulp-autoprefixer");
 function runCss(platform) {
   let cssFiles = "./src/styles/**/*.scss";
   let outputDir = "./dist/styles/";
-  // let isDevelopment = process.env.NODE_ENV == "production";
-  let isDevelopment = false;
+  let isDevelopment = process.env.NODE_ENV == "production";
   
   if (platform) {
     cssFiles = `./src/styles/pages/${platform}/**/*.scss`;
