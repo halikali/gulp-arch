@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
     "lib": ["ES2015", "DOM"],
-    "target": "es5",
-    "module": "es6",
+    "target": "ES5",
+    "module": "ES6",
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
     "outDir": "dist/js",
+    "rootDir": "src/scripts",
     "sourceMap": true,
     "moduleResolution": "node"
   },
