@@ -3,7 +3,7 @@ const imagemin = require("gulp-imagemin");
 
 function imageTask() {
   return gulp
-    .src("src/images/**/*.{jpg,png,gif,svg}")
+    .src("src/assets/**/*.{jpg,png,gif,svg}")
     .pipe(
       imagemin([
         imagemin.mozjpeg({ quality: 75, progressive: true }),
@@ -12,7 +12,7 @@ function imageTask() {
         imagemin.svgo({ plugins: [{ removeViewBox: true }] }),
       ])
     )
-    .pipe(gulp.dest("dist/images"));
+    .pipe(gulp.dest("dist/assets"));
 }
 
 module.exports = {
