@@ -68,7 +68,7 @@ function jsTask(platform) {
           noImplicitAny: true,
           removeComments: true,
           preserveConstEnums: true,
-          outDir: exportableOutputDir,
+          outDir: "dist",
           rootDir: "./",
           sourceMap: true,
           moduleResolution: "node",

@@ -6,7 +6,7 @@
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
-    "outDir": "dist/js",
+    "outDir": "dist",
     "rootDir": "src/scripts",
     "sourceMap": true,
     "moduleResolution": "node"
