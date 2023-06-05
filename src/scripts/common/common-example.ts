@@ -1,11 +1,11 @@
 interface IUser {
   name: string;
   surname: string;
-  age: number;
+  date: number;
 }
 
 export const user: IUser = {
   name: "ali",
   surname: "tunç",
-  age: 25,
+  date: 25,
 };

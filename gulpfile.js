@@ -24,6 +24,7 @@ if (platformArg === "--platform") {
   platform = process.argv[3];
 }
 
+// Platform bilgisine ihtiyaç duymayan taskların tanımlandığı kod bloğu
 gulp.task("move-html", moveHtml);
 gulp.task("font", fontTask);
 gulp.task("image", imageTask);
@@ -39,9 +40,6 @@ gulp.task("scripts", async function () {
   jsTask(platform);
 });
 
-gulp.task("default", async function () {
-  return runCss(platform), jsTask(platform);
-});
 // Gulp tasklarının tanımlandığı kod bloğu bitişi
 
 // Watcher tanımlamaları
@@ -53,6 +51,11 @@ gulp.task("watchFiles", async function () {
     watcher("./src/styles/**/**", "css"),
     watcher("./src/views/**/**", "move-html")
   );
+});
+
+// Gulp komutunda çalışacak kod bloğu
+gulp.task("default", async function () {
+  return runCss(platform), jsTask(platform);
 });
 
 // Gulp build komutunda çalışacak kod bloğu
