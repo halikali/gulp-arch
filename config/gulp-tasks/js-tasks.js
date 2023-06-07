@@ -5,6 +5,7 @@ const terser = require("gulp-terser");
 const babel = require("gulp-babel");
 const gulpIf = require("gulp-if");
 const rename = require("gulp-rename");
+const replace = require("gulp-replace");
 
 function jsTask(platform) {
   const isDevelopment = process.env.NODE_ENV === "development";
@@ -12,6 +13,8 @@ function jsTask(platform) {
   let outputDir = "./dist/scripts/";
   let exportableFiles = "./src/exportable/**/*.ts";
   let exportableOutputDir = "./dist/exportable/";
+
+  const importPathRegex = /(import\s*{[^}]+}\s*from\s+["'])(.*)(["'];)/g;
 
   if (platform) {
     scriptFiles = `./src/scripts/pages/${platform}/**/*.ts`;
@@ -51,6 +54,12 @@ function jsTask(platform) {
         )
       )
       .pipe(rename({ suffix: ".min" }))
+      .pipe(
+        replace(importPathRegex, (match) => {
+          return `${match.trim().slice(0, match.length - 2)}.min.js";`;
+        })
+      )
+
       .pipe(gulpIf(isDevelopment == true, sourcemaps.write(".")))
       .pipe(gulp.dest(outputDir));
 

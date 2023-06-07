@@ -28,6 +28,7 @@
     "gulp-if": "^3.0.0",
     "gulp-imagemin": "^7.0.1",
     "gulp-rename": "^2.0.0",
+    "gulp-replace": "^1.1.4",
     "gulp-sass": "^5.1.0",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-strip-debug": "^5.0.0",

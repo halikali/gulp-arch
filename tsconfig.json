@@ -9,7 +9,10 @@
     "outDir": "dist",
     "rootDir": "src/scripts",
     "sourceMap": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "strict": true,
   },
   "include": ["./src/scripts/**/*.ts"],
   "exclude": ["**/*.spec.ts"]
