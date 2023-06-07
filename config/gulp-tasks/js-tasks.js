@@ -13,8 +13,6 @@ function jsTask(platform) {
   let exportableFiles = "./src/exportable/**/*.ts";
   let exportableOutputDir = "./dist/exportable/";
 
-  console.log("platform => ", platform);
-  
   if (platform) {
     scriptFiles = `./src/scripts/pages/${platform}/**/*.ts`;
     exportableFiles = `./src/exportable/${platform}/**/*.ts`;
