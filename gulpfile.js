@@ -36,6 +36,7 @@ Daha hızlı çalışmaları için async eklendi
 gulp.task("css", async function () {
   return runCss(platform);
 });
+
 gulp.task("scripts", async function () {
   jsTask(platform);
 });

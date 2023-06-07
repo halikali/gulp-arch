@@ -6,17 +6,17 @@ const babel = require("gulp-babel");
 const gulpIf = require("gulp-if");
 const rename = require("gulp-rename");
 
-
 function jsTask(platform) {
   const isDevelopment = process.env.NODE_ENV === "development";
-  let scriptFiles = "./src/scripts/**/*.page.ts";
+  let scriptFiles = "./src/scripts/**/*.ts";
   let outputDir = "./dist/scripts/";
   let exportableFiles = "./src/exportable/**/*.ts";
   let exportableOutputDir = "./dist/exportable/";
 
-
+  console.log("platform => ", platform);
+  
   if (platform) {
-    scriptFiles = `./src/scripts/pages/${platform}/**/*.page.ts`;
+    scriptFiles = `./src/scripts/pages/${platform}/**/*.ts`;
     exportableFiles = `./src/exportable/${platform}/**/*.ts`;
     outputDir = `./dist/scripts/pages/${platform}/`;
     exportableOutputDir = `./dist/exportable/${platform}/`;
