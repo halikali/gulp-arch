@@ -7,6 +7,7 @@ const { jsTask } = require("./config/gulp-tasks/js-tasks");
 const { fontTask } = require("./config/gulp-tasks/font-task");
 const { imageTask } = require("./config/gulp-tasks/image-task");
 const { watcher } = require("./config/gulp-tasks/watcher-task");
+const { serve } = require("./config/gulp-tasks/serve-task");
 
 // Developement ve Prod ortamları için env dosyalarını etkinleştiren kod bloğu
 if (process.env.NODE_ENV === "production") {
@@ -28,6 +29,7 @@ if (platformArg === "--platform") {
 gulp.task("move-html", moveHtml);
 gulp.task("font", fontTask);
 gulp.task("image", imageTask);
+gulp.task("serve", serve);
 
 /*
 CSS ve JS tasklarını çalışırken platform bilgisine ihtiyaç duyduğu için bu şekilde tanımlandı.
@@ -69,5 +71,6 @@ exports.dev = gulp.parallel(
   "scripts",
   "font",
   "image",
-  "watchFiles"
+  "watchFiles",
+  "serve"
 );
