@@ -5,6 +5,7 @@ function serve() {
   browserSync.init({
     server: {
       baseDir: "./dist",
+      index: 'views/index.html',
     },
     middleware: function (req, res, next) {
       res.setHeader("Access-Control-Allow-Origin", "*");
