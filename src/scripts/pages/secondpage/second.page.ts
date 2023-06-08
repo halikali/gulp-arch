@@ -1,10 +1,10 @@
-class Greeting { 
-    greet():void { 
-       console.log("Hello World!!!") 
-    } // comment example
- } 
- var obj = new Greeting(); 
- obj.greet();
+class Greeting {
+  greet(): void {
+    console.log('Hello World!!!');
+  } // comment example
+}
+const obj = new Greeting();
 
- console.log("hello");
- 
+obj.greet();
+
+console.log('hello');

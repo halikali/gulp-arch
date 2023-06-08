@@ -5,7 +5,9 @@ interface IUser {
 }
 
 export const user: IUser = {
-  name: "ali",
-  surname: "tunç",
+  name: 'ali',
+  surname: 'tunç',
   date: 25,
+};
+: 25,
 };

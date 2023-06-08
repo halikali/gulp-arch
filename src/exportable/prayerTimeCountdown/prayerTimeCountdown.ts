@@ -1,1 +1,2 @@
-console.log("prayer time count down is working");
+console.log('prayer time count down is working');
+

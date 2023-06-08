@@ -1,1 +1,1 @@
-console.log("homecard load");
+console.log('homecard load');
