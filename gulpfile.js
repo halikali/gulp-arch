@@ -1,19 +1,20 @@
-const gulp = require("gulp");
-const dotenv = require("dotenv");
+const gulp = require('gulp');
+const dotenv = require('dotenv');
 
-const { moveHtml } = require("./config/gulp-tasks/html-task");
-const { runCss } = require("./config/gulp-tasks/css-task");
-const { jsTask } = require("./config/gulp-tasks/js-tasks");
-const { fontTask } = require("./config/gulp-tasks/font-task");
-const { imageTask } = require("./config/gulp-tasks/image-task");
-const { watcher } = require("./config/gulp-tasks/watcher-task");
-const { serve } = require("./config/gulp-tasks/serve-task");
+const { moveHtml } = require('./config/gulp-tasks/html-task');
+const { runCss } = require('./config/gulp-tasks/css-task');
+const { jsTask } = require('./config/gulp-tasks/js-tasks');
+const { fontTask } = require('./config/gulp-tasks/font-task');
+const { imageTask } = require('./config/gulp-tasks/image-task');
+const { watcher } = require('./config/gulp-tasks/watcher-task');
+const { serve } = require('./config/gulp-tasks/serve-task');
+const { linter } = require('./config/gulp-tasks/linter-task');
 
 // Developement ve Prod ortamları için env dosyalarını etkinleştiren kod bloğu
-if (process.env.NODE_ENV === "production") {
-  dotenv.config({ path: ".env.prod" });
+if (process.env.NODE_ENV === 'production') {
+  dotenv.config({ path: '.env.prod' });
 } else {
-  dotenv.config({ path: ".env.dev" });
+  dotenv.config({ path: '.env.dev' });
 }
 
 // Gulp --platform <folder_name> şeklinde bir komut girilirse dosya adını okuyacak kod bloğu
@@ -21,56 +22,69 @@ let platform = null;
 const platformArg = process.argv[2];
 
 // Gulp tasklarının tanımlandığı kod bloğu başlangıcı
-if (platformArg === "--platform") {
+if (platformArg === '--platform') {
   platform = process.argv[3];
 }
 
 // Platform bilgisine ihtiyaç duymayan taskların tanımlandığı kod bloğu
-gulp.task("move-html", moveHtml);
-gulp.task("font", fontTask);
-gulp.task("image", imageTask);
-gulp.task("serve", serve);
+gulp.task('move-html', moveHtml);
+gulp.task('font', fontTask);
+gulp.task('image', imageTask);
+gulp.task('serve', serve);
 
 /*
 CSS ve JS tasklarını çalışırken platform bilgisine ihtiyaç duyduğu için bu şekilde tanımlandı.
 Daha hızlı çalışmaları için async eklendi
 */
-gulp.task("css", async function () {
+gulp.task('css', async function () {
   return runCss(platform);
 });
 
-gulp.task("scripts", async function () {
+gulp.task('scripts', async function () {
   jsTask(platform);
+});
+
+// Eslint ve Prettier Toolları beraber çalışıyor
+gulp.task('linter', async function () {
+  linter();
 });
 
 // Gulp tasklarının tanımlandığı kod bloğu bitişi
 
 // Watcher tanımlamaları
-gulp.task("watchFiles", async function () {
+gulp.task('watchFiles', async function () {
   return (
-    watcher("./src/assets/**/**", "image"),
-    watcher("./src/fonts/**/**", "font"),
-    watcher("./src/scripts/**/**", "scripts"),
-    watcher("./src/styles/**/**", "css"),
-    watcher("./src/views/**/**", "move-html")
+    watcher('./src/assets/**/**', 'image'),
+    watcher('./src/fonts/**/**', 'font'),
+    watcher('./src/scripts/**/**', 'scripts'),
+    watcher('./src/styles/**/**', 'css'),
+    watcher('./src/views/**/**', 'move-html'),
+    watcher(['**/*.ts', '!node_modules/**'], 'linter')
   );
 });
 
 // Gulp komutunda çalışacak kod bloğu
-gulp.task("default", async function () {
+gulp.task('default', async function () {
   return runCss(platform), jsTask(platform);
 });
 
 // Gulp build komutunda çalışacak kod bloğu
-exports.build = gulp.parallel("move-html", "css", "scripts", "font", "image");
+exports.build = gulp.parallel(
+  'move-html',
+  'css',
+  'scripts',
+  'font',
+  'image',
+  'linter'
+);
 
 // Gulp dev komutunda çalışacak kod bloğu
 exports.dev = gulp.parallel(
-  "move-html",
-  "css",
-  "scripts",
-  "font",
-  "image",
-  "watchFiles",
-  "serve"
+  'move-html',
+  'css',
+  'scripts',
+  'font',
+  'image',
+  'watchFiles',
+  'serve'
 );
