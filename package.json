@@ -6,13 +6,9 @@
   "scripts": {
     "build:dev": "gulp build && NODE_ENV=development",
     "build:prod": "gulp build && NODE_ENV=production",
-    "lint": "eslint .",
-    "format": "prettier --write ."
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint && npm run format"
-    }
+    "lint": "eslint --fix --ext .ts src",
+    "format": "prettier --write .",
+    "formatter": "npm run lint && npm run format"
   },
   "author": "",
   "license": "ISC",
@@ -31,6 +27,8 @@
     "babel-loader": "^9.1.2",
     "browser-sync": "^2.29.3",
     "eslint": "^8.42.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-babel": "^8.0.0",
