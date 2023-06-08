@@ -5,7 +5,14 @@
   "main": "index.js",
   "scripts": {
     "build:dev": "gulp build && NODE_ENV=development",
-    "build:prod": "gulp build && NODE_ENV=production"
+    "build:prod": "gulp build && NODE_ENV=production",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run format"
+    }
   },
   "author": "",
   "license": "ISC",
@@ -29,11 +36,9 @@
     "gulp-babel": "^8.0.0",
     "gulp-clean-css": "^4.3.0",
     "gulp-cli": "^2.3.0",
-    "gulp-eslint": "^6.0.0",
     "gulp-eslint-new": "^1.8.0",
     "gulp-if": "^3.0.0",
     "gulp-imagemin": "^7.0.1",
-    "gulp-prettier": "^4.0.0",
     "gulp-rename": "^2.0.0",
     "gulp-replace": "^1.1.4",
     "gulp-sass": "^5.1.0",
@@ -41,6 +46,7 @@
     "gulp-strip-debug": "^5.0.0",
     "gulp-terser": "^2.1.0",
     "gulp-typescript": "^6.0.0-alpha.1",
+    "husky": "^8.0.3",
     "node-env": "^0.1.6",
     "prettier": "^2.8.8",
     "sass": "^1.62.1",
