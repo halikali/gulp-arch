@@ -7,13 +7,13 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "outDir": "dist",
-    "rootDir": "src/scripts",
+    "rootDir": "src",
     "sourceMap": true,
     "moduleResolution": "node",
     "allowJs": true,
     "esModuleInterop": true,
-    "strict": true,
+    "strict": true
   },
-  "include": ["./src/scripts/**/*.ts"],
-  "exclude": ["**/*.spec.ts"]
+  "include": [".eslintrc.json", "./src/**/*.ts"],
+  "exclude": ["**/*.spec.ts", "**/*.js"]
 }

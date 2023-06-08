@@ -8,7 +8,6 @@ const { fontTask } = require('./config/gulp-tasks/font-task');
 const { imageTask } = require('./config/gulp-tasks/image-task');
 const { watcher } = require('./config/gulp-tasks/watcher-task');
 const { serve } = require('./config/gulp-tasks/serve-task');
-const { linter } = require('./config/gulp-tasks/linter-task');
 
 // Developement ve Prod ortamları için env dosyalarını etkinleştiren kod bloğu
 if (process.env.NODE_ENV === 'production') {
@@ -44,11 +43,6 @@ gulp.task('scripts', async function () {
   jsTask(platform);
 });
 
-// Eslint ve Prettier Toolları beraber çalışıyor
-gulp.task('linter', async function () {
-  linter();
-});
-
 // Gulp tasklarının tanımlandığı kod bloğu bitişi
 
 // Watcher tanımlamaları
@@ -58,8 +52,7 @@ gulp.task('watchFiles', async function () {
     watcher('./src/fonts/**/**', 'font'),
     watcher('./src/scripts/**/**', 'scripts'),
     watcher('./src/styles/**/**', 'css'),
-    watcher('./src/views/**/**', 'move-html'),
-    watcher(['**/*.ts', '!node_modules/**'], 'linter')
+    watcher('./src/views/**/**', 'move-html')
   );
 });
 
@@ -69,14 +62,7 @@ gulp.task('default', async function () {
 });
 
 // Gulp build komutunda çalışacak kod bloğu
-exports.build = gulp.parallel(
-  'move-html',
-  'css',
-  'scripts',
-  'font',
-  'image',
-  'linter'
-);
+exports.build = gulp.parallel('move-html', 'css', 'scripts', 'font', 'image');
 
 // Gulp dev komutunda çalışacak kod bloğu
 exports.dev = gulp.parallel(
