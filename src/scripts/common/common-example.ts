@@ -9,5 +9,3 @@ export const user: IUser = {
   surname: 'tunç',
   date: 25,
 };
-: 25,
-};
