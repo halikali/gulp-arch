@@ -74,3 +74,5 @@ exports.dev = gulp.parallel(
   'watchFiles',
   'serve'
 );
+
+exports.webserver = gulp.parallel("serve");
