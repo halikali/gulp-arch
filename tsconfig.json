@@ -6,8 +6,8 @@
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
-    "outDir": "dist",
-    "rootDir": "src",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "sourceMap": true,
     "moduleResolution": "node",
     "allowJs": true,
@@ -15,5 +15,5 @@
     "strict": true
   },
   "include": [".eslintrc.json", "./src/**/*.ts"],
-  "exclude": ["**/*.spec.ts", "**/*.js"]
+  "exclude": ["**/*.spec.ts", "**/*.js", "node_modules"]
 }

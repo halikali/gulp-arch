@@ -17,11 +17,12 @@ function jsTask(platform) {
   const importPathRegex = /(import\s*{[^}]+}\s*from\s+["'])(.*)(["'];)/g;
 
   if (platform) {
+    console.log("platform bilgisi bulundu " + platform);
     scriptFiles = `./src/scripts/pages/${platform}/**/*.ts`;
     exportableFiles = `./src/exportable/${platform}/**/*.ts`;
     outputDir = `./dist/scripts/pages/${platform}/`;
     exportableOutputDir = `./dist/exportable/${platform}/`;
-  }
+  } 
 
   const tsProject = ts.createProject('tsconfig.json');
 
@@ -76,7 +77,7 @@ function jsTask(platform) {
           removeComments: true,
           preserveConstEnums: true,
           outDir: 'dist',
-          rootDir: 'src/scripts',
+          rootDir: 'src/exportable',
           sourceMap: true,
           moduleResolution: 'node',
           allowJs: true,
