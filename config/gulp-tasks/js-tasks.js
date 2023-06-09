@@ -17,7 +17,6 @@ function jsTask(platform) {
   const importPathRegex = /(import\s*{[^}]+}\s*from\s+["'])(.*)(["'];)/g;
 
   if (platform) {
-    console.log("platform bilgisi bulundu " + platform);
     scriptFiles = `./src/scripts/pages/${platform}/**/*.ts`;
     exportableFiles = `./src/exportable/${platform}/**/*.ts`;
     outputDir = `./dist/scripts/pages/${platform}/`;
