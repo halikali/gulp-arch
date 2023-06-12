@@ -10,7 +10,6 @@ const user: IUser = {
   date: 25,
 };
 
-
 const getUser = () => {
-  return user
-}
+  return user;
+};

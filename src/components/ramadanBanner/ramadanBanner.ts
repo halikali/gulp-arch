@@ -1,1 +1,1 @@
-console.log("ramadan banner");
+console.log('ramadan banner');

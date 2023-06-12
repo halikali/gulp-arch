@@ -1,2 +1,2 @@
-console.log("user");
-getLog("deneme")
+console.log('user');
+getLog('deneme');
