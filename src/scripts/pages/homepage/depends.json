@@ -1,0 +1,6 @@
+{
+  "components": [
+    "./src/scripts/pages/homepage/homecard.ts",
+    "./src/scripts/utils/example-util.ts"
+  ]
+}

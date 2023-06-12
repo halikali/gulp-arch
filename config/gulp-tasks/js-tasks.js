@@ -4,36 +4,61 @@ const ts = require('gulp-typescript');
 const terser = require('gulp-terser');
 const babel = require('gulp-babel');
 const gulpIf = require('gulp-if');
-const rename = require('gulp-rename');
-const replace = require('gulp-replace');
+const path = require('path');
+const jsonfile = require('jsonfile');
+const glob = require('glob');
+const concat = require('gulp-concat');
 
 function jsTask(platform) {
   const isDevelopment = process.env.NODE_ENV === 'development';
-  let scriptFiles = './src/scripts/**/*.ts';
-  let outputDir = './dist/scripts/';
-  let exportableFiles = './src/exportable/**/*.ts';
-  let exportableOutputDir = './dist/exportable/';
-
-  const importPathRegex = /(import\s*{[^}]+}\s*from\s+["'])(.*)(["'];)/g;
+  let scriptFiles = './src/scripts/**/*.page.ts';
+  let outputDir = './dist/scripts/pages/';
 
   if (platform) {
-    scriptFiles = `./src/scripts/pages/${platform}/**/*.ts`;
-    exportableFiles = `./src/exportable/${platform}/**/*.ts`;
-    outputDir = `./dist/scripts/pages/${platform}/`;
-    exportableOutputDir = `./dist/exportable/${platform}/`;
-  } 
+    scriptFiles = `./src/scripts/pages/${platform}/**/*.page.ts`;
+    outputDir = `./dist/scripts/pages/`;
+  }
 
-  const tsProject = ts.createProject('tsconfig.json');
+  const compileExportable = async (filePath) => {
+    const dependsPath = path.join(path.dirname(filePath), "depends.json");
+    const depends = jsonfile.readFileSync(dependsPath);
+    const filename = path.basename(filePath);
+    const dirname = path.dirname(filePath).split("pages/")[1];
 
-  const jsCompile = () =>
-    gulp
-      .src(scriptFiles)
+    if (depends.components.length > 0) {
+      jsCompile([...depends.components, filePath], {
+        base: filename,
+        dir: dirname
+      });
+    }
+  };
+
+  const runCompiler = async (done) => {
+    glob(scriptFiles, function (err, files) {
+      if (err) {
+        done(err);
+        return;
+      }
+      const task = files.map(function (file) {
+        compileExportable(file);
+      });
+    });
+  };
+
+  const jsCompile = async (files, filename) => {
+    return gulp
+      .src(files, {
+        allowEmpty: true
+      })
+      .pipe(concat(filename.base))
       .pipe(gulpIf(isDevelopment == true, sourcemaps.init()))
-      .pipe(tsProject())
+      .pipe(ts.createProject('tsconfig.json')())
       .pipe(
         babel({
           presets: [
-            ['@babel/preset-env', { modules: false }],
+            ['@babel/preset-env', {
+              modules: false
+            }],
             '@babel/preset-typescript',
           ],
         })
@@ -53,70 +78,12 @@ function jsTask(platform) {
           })
         )
       )
-      .pipe(rename({ suffix: '.min' }))
-      .pipe(
-        replace(importPathRegex, (match) => {
-          return `${match.trim().slice(0, match.length - 2)}.min.js";`;
-        })
-      )
-
       .pipe(gulpIf(isDevelopment == true, sourcemaps.write('.')))
-      .pipe(gulp.dest(outputDir));
+      .pipe(gulp.dest(outputDir + filename.dir));
 
-  const exportableCompile = () =>
-    gulp
-      .src(exportableFiles)
-      .pipe(gulpIf(isDevelopment == true, sourcemaps.init()))
-      .pipe(
-        ts.createProject({
-          lib: ['ES2015', 'DOM'],
-          target: 'ES5',
-          module: 'ES6',
-          noImplicitAny: true,
-          removeComments: true,
-          preserveConstEnums: true,
-          outDir: 'dist',
-          rootDir: 'src/exportable',
-          sourceMap: true,
-          moduleResolution: 'node',
-          allowJs: true,
-          esModuleInterop: true,
-          strict: true,
-        })()
-      )
-      .pipe(
-        babel({
-          presets: [
-            ['@babel/preset-env', { modules: false }],
-            '@babel/preset-typescript',
-          ],
-        })
-      )
-      .pipe(
-        gulpIf(
-          isDevelopment == false,
-          terser({
-            ecma: 6,
-            compress: {
-              drop_console: true,
-              passes: 2,
-            },
-            output: {
-              comments: false,
-            },
-          })
-        )
-      )
-      .pipe(
-        rename((path) => {
-          path.basename = path.basename.replace('.d', '');
-          path.extname = '.min.js';
-        })
-      )
-      .pipe(gulpIf(isDevelopment == true, sourcemaps.write('.')))
-      .pipe(gulp.dest(exportableOutputDir));
+  }
 
-  return gulp.parallel(jsCompile, exportableCompile)();
+  return gulp.parallel(runCompiler)();
 }
 
 module.exports = {

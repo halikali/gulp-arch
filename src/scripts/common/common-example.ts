@@ -4,8 +4,13 @@ interface IUser {
   date: number;
 }
 
-export const user: IUser = {
+const user: IUser = {
   name: 'ali',
   surname: 'tunç',
   date: 25,
 };
+
+
+const getUser = () => {
+  return user
+}

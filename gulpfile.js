@@ -1,19 +1,40 @@
 const gulp = require('gulp');
 const dotenv = require('dotenv');
 
-const { moveHtml } = require('./config/gulp-tasks/html-task');
-const { runCss } = require('./config/gulp-tasks/css-task');
-const { jsTask } = require('./config/gulp-tasks/js-tasks');
-const { fontTask } = require('./config/gulp-tasks/font-task');
-const { imageTask } = require('./config/gulp-tasks/image-task');
-const { watcher } = require('./config/gulp-tasks/watcher-task');
-const { serve } = require('./config/gulp-tasks/serve-task');
+const {
+  moveHtml
+} = require('./config/gulp-tasks/html-task');
+const {
+  runCss
+} = require('./config/gulp-tasks/css-task');
+const {
+  jsTask
+} = require('./config/gulp-tasks/js-tasks');
+const {
+  fontTask
+} = require('./config/gulp-tasks/font-task');
+const {
+  imageTask
+} = require('./config/gulp-tasks/image-task');
+const {
+  watcher
+} = require('./config/gulp-tasks/watcher-task');
+const {
+  serve
+} = require('./config/gulp-tasks/serve-task');
+const {
+  exportableTasks
+} = require('./config/gulp-tasks/exportable');
 
 // Developement ve Prod ortamları için env dosyalarını etkinleştiren kod bloğu
 if (process.env.NODE_ENV === 'production') {
-  dotenv.config({ path: '.env.prod' });
+  dotenv.config({
+    path: '.env.prod'
+  });
 } else {
-  dotenv.config({ path: '.env.dev' });
+  dotenv.config({
+    path: '.env.dev'
+  });
 }
 
 // Gulp --platform <folder_name> şeklinde bir komut girilirse dosya adını okuyacak kod bloğu
@@ -30,6 +51,9 @@ gulp.task('move-html', moveHtml);
 gulp.task('font', fontTask);
 gulp.task('image', imageTask);
 gulp.task('serve', serve);
+gulp.task("exportable", async function () {
+  exportableTasks();
+});
 
 /*
 CSS ve JS tasklarını çalışırken platform bilgisine ihtiyaç duyduğu için bu şekilde tanımlandı.
@@ -58,11 +82,11 @@ gulp.task('watchFiles', async function () {
 
 // Gulp komutunda çalışacak kod bloğu
 gulp.task('default', async function () {
-  return runCss(platform), jsTask(platform);
+  return runCss(platform), jsTask(platform), watcher('./src/scripts/**/**', 'scripts'), watcher('./src/styles/**/**', 'css');
 });
 
 // Gulp build komutunda çalışacak kod bloğu
-exports.build = gulp.parallel('move-html', 'css', 'scripts', 'font', 'image');
+exports.build = gulp.parallel('move-html', 'css', 'scripts', 'font', 'image', "exportable");
 
 // Gulp dev komutunda çalışacak kod bloğu
 exports.dev = gulp.parallel(
