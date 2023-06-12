@@ -6,7 +6,7 @@ const autoprefixer = require("gulp-autoprefixer");
 
 
 function runCss(platform) {
-  const isDevelopment = process.env.NODE_ENV === "development";
+  const isDevelopment = process.env.STATUS === "development";
   let cssFiles = "./src/styles/**/*.scss";
   let outputDir = "./dist/styles/";
   let exportableFiles = "./src/exportable/**/*.scss";

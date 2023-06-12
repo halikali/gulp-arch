@@ -12,7 +12,7 @@ const gulpIf = require('gulp-if');
 const GulpCleanCss = require('gulp-clean-css');
 
 function exportableTasks() {
-  const isDevelopment = process.env.NODE_ENV === 'development';
+  const isDevelopment = process.env.STATUS === 'development';
   
   // TypeScript derleme görevi
   const compileTypeScript = (filePath) => {

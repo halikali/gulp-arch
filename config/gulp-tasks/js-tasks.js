@@ -10,7 +10,7 @@ const glob = require('glob');
 const concat = require('gulp-concat');
 
 function jsTask(platform) {
-  const isDevelopment = process.env.NODE_ENV === 'development';
+  const isDevelopment = process.env.STATUS === 'development';
   let scriptFiles = './src/scripts/**/*.page.ts';
   let outputDir = './dist/scripts/pages/';
 
