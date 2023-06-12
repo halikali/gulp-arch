@@ -95,6 +95,7 @@ exports.dev = gulp.parallel(
   'scripts',
   'font',
   'image',
+  "exportable",
   'watchFiles',
   'serve'
 );
