@@ -25,6 +25,7 @@ const {
 const {
   exportableTasks
 } = require('./config/gulp-tasks/exportable');
+const { moveTask } = require('./config/gulp-tasks/move-task');
 
 // Developement ve Prod ortamları için env dosyalarını etkinleştiren kod bloğu
 if (process.env.NODE_ENV === 'production') {
@@ -54,6 +55,9 @@ gulp.task('serve', serve);
 gulp.task("exportable", async function () {
   exportableTasks();
 });
+gulp.task("move-vendors", async function(){
+  moveTask("vendors");
+})
 
 /*
 CSS ve JS tasklarını çalışırken platform bilgisine ihtiyaç duyduğu için bu şekilde tanımlandı.
@@ -76,7 +80,8 @@ gulp.task('watchFiles', async function () {
     watcher('./src/fonts/**/**', 'font'),
     watcher('./src/scripts/**/**', 'scripts'),
     watcher('./src/styles/**/**', 'css'),
-    watcher('./src/views/**/**', 'move-html')
+    watcher('./src/views/**/**', 'move-html'),
+    watcher('./src/vendors/**,*', "move-vendors")
   );
 });
 
@@ -86,7 +91,7 @@ gulp.task('default', async function () {
 });
 
 // Gulp build komutunda çalışacak kod bloğu
-exports.build = gulp.parallel('move-html', 'css', 'scripts', 'font', 'image', "exportable");
+exports.build = gulp.parallel('move-html', 'css', 'scripts', 'font', 'image', "exportable", "move-vendors");
 
 // Gulp dev komutunda çalışacak kod bloğu
 exports.dev = gulp.parallel(
@@ -96,6 +101,7 @@ exports.dev = gulp.parallel(
   'font',
   'image',
   "exportable",
+  "move-vendors",
   'watchFiles',
   'serve'
 );
