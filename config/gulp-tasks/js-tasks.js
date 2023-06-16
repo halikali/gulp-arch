@@ -11,11 +11,11 @@ const concat = require('gulp-concat');
 
 function jsTask(platform) {
   const isDevelopment = process.env.STATUS === 'development';
-  let scriptFiles = './src/scripts/**/*.page.ts';
-  let outputDir = './dist/scripts/pages/';
+  let scriptFiles = './src/scripts/**/index.ts';
+  let outputDir = './dist/scripts/';
 
   if (platform) {
-    scriptFiles = `./src/scripts/pages/${platform}/**/*.page.ts`;
+    scriptFiles = `./src/scripts/pages/${platform}/**/index.ts`;
     outputDir = `./dist/scripts/pages/`;
   }
 
@@ -23,7 +23,13 @@ function jsTask(platform) {
     const dependsPath = path.join(path.dirname(filePath), "depends.json");
     const depends = jsonfile.readFileSync(dependsPath);
     const filename = path.basename(filePath);
-    const dirname = path.dirname(filePath).split("pages/")[1];
+    let dirname = "";
+
+    if (platform) {
+      dirname = path.dirname(filePath).split("pages/")[1]
+    } else {
+      dirname = path.dirname(filePath).split("scripts/")[1]
+    }
 
     if (depends.components.length > 0) {
       jsCompile([...depends.components, filePath], {
