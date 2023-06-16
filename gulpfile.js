@@ -81,7 +81,8 @@ gulp.task('watchFiles', async function () {
     watcher('./src/scripts/**/**', 'scripts'),
     watcher('./src/styles/**/**', 'css'),
     watcher('./src/views/**/**', 'move-html'),
-    watcher('./src/vendors/**,*', "move-vendors")
+    watcher('./src/vendors/**/*', "move-vendors"),
+    watcher('./src/components/**/*', "exportable")
   );
 });
 
