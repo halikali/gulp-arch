@@ -10,16 +10,29 @@ const path = require('path');
 const autoPrefixer = require('gulp-autoprefixer');
 const gulpIf = require('gulp-if');
 const GulpCleanCss = require('gulp-clean-css');
+const concat = require('gulp-concat');
 
 function exportableTasks() {
   const isDevelopment = process.env.STATUS === 'development';
-  
-  // TypeScript derleme görevi
-  const compileTypeScript = (filePath) => {
-    const distFolder = path.dirname(filePath).split("components/")[1];
 
-    return gulp
-      .src(filePath)
+  // TODO: TypeScript derleme fonksiyonu optimize edilecek
+  // TypeScript derleme görevi
+  const compileTypeScript = (filePath, filename = "") => {
+    let distFolder = "";
+    let willItMerge = filename?.base ? true : false
+
+    if (typeof filePath == "string" ) {
+      distFolder = path.dirname(filePath).split("components/")[1]
+    } else {
+      distFolder = filename?.dir;
+    }
+
+    if (willItMerge) {
+      return gulp
+      .src(filePath, {
+        allowEmpty: true
+      })
+      .pipe(concat(filename.base))
       .pipe(gulpIf(isDevelopment, sourcemaps.init()))
       .pipe(ts.createProject('tsconfig.json')())
       .pipe(
@@ -49,6 +62,41 @@ function exportableTasks() {
       )
       .pipe(gulpIf(isDevelopment, sourcemaps.write('.')))
       .pipe(gulp.dest(`./dist/components/${distFolder}/`));
+    } else {
+      return gulp
+      .src(filePath, {
+        allowEmpty: true
+      })
+      .pipe(gulpIf(isDevelopment, sourcemaps.init()))
+      .pipe(ts.createProject('tsconfig.json')())
+      .pipe(
+        babel({
+          presets: [
+            ['@babel/preset-env', {
+              modules: false,
+            }],
+            '@babel/preset-typescript',
+          ],
+        })
+      )
+      .pipe(
+        gulpIf(
+          !isDevelopment,
+          terser({
+            ecma: 6,
+            compress: {
+              drop_console: true,
+              passes: 2,
+            },
+            output: {
+              comments: false,
+            },
+          })
+        )
+      )
+      .pipe(gulpIf(isDevelopment, sourcemaps.write('.')))
+      .pipe(gulp.dest(`./dist/components/${distFolder}/`));
+    }
   };
 
   // SCSS derleme görevi
@@ -66,10 +114,20 @@ function exportableTasks() {
   const compileExportable = (filePath) => {
     const optionsPath = path.join(path.dirname(filePath), 'options.json');
     const options = jsonfile.readFileSync(optionsPath);
+    const filename = path.basename(filePath);
+    let dirname = path.dirname(filePath).split("components/")[1];
 
-    if (options.exportable === true) {
+    if (options?.exportable === true) {
       if (path.extname(filePath) === '.ts') {
-        return compileTypeScript(filePath);
+        if (options?.depends?.length > 0) {
+          compileTypeScript([...options.depends, filePath], {
+            base: filename,
+            dir: dirname
+          });
+        } else {
+          return compileTypeScript(filePath);
+        }
+
       } else if (path.extname(filePath) === '.scss') {
         return compileScss(filePath);
       }

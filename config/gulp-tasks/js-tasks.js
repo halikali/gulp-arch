@@ -19,7 +19,7 @@ function jsTask(platform) {
     outputDir = `./dist/scripts/pages/`;
   }
 
-  const compileExportable = async (filePath) => {
+  const compileTypescript = async (filePath) => {
     const dependsPath = path.join(path.dirname(filePath), "depends.json");
     const depends = jsonfile.readFileSync(dependsPath);
     const filename = path.basename(filePath);
@@ -46,7 +46,7 @@ function jsTask(platform) {
         return;
       }
       const task = files.map(function (file) {
-        compileExportable(file);
+        compileTypescript(file);
       });
     });
   };
