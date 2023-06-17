@@ -36,6 +36,11 @@ function jsTask(platform) {
         base: filename,
         dir: dirname
       });
+    } else {
+      jsCompile(filePath, {
+        base: filename,
+        dir: dirname
+      })
     }
   };
 
