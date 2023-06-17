@@ -1,3 +1,4 @@
 {
-  "exportable": true
+  "exportable": true,
+  "depends": ["./src/components/prayerTimes/prayerTimes.ts"]
 }
