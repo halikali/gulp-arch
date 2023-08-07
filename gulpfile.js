@@ -43,7 +43,7 @@ let platform = null;
 const platformArg = process.argv[2];
 
 // Gulp tasklarının tanımlandığı kod bloğu başlangıcı
-if (platformArg === '--platform') {
+if (platformArg === '--only') {
   platform = process.argv[3];
 }
 
@@ -88,7 +88,7 @@ gulp.task('watchFiles', async function () {
 
 // Gulp komutunda çalışacak kod bloğu
 gulp.task('default', async function () {
-  return runCss(platform), jsTask(platform), watcher('./src/scripts/**/**', 'scripts'), watcher('./src/styles/**/**', 'css');
+  return runCss(platform), jsTask(platform), watcher('./src/scripts/**/**', 'scripts'), watcher('./src/styles/**/**', 'css'), serve();
 });
 
 // Gulp build komutunda çalışacak kod bloğu
