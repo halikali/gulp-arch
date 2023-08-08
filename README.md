@@ -7,7 +7,7 @@ This project aims to build a modular architecture with Gulp and manage files in 
 ### General Information
 - With this project, all code is automatically passed through Eslint and Prettier before committing so that teams or individuals can continue to write code to the same standard.
 If the code that does not meet the specified standard cannot be automatically corrected, the commit fails and the commit must be resubmitted after manual editing.
-
+  
 - Environment segregation
     
     a) Development environment
@@ -29,6 +29,8 @@ If the code that does not meet the specified standard cannot be automatically co
   
 ## To start using the Project
 
+### Node Version: V18.14.1
+  
 Clone this project
 
 ```bash
@@ -165,6 +167,8 @@ Bu proje Gulp ile modüler bir mimari kurgulamayı ve dosyaları sistematik bir 
         - SCSS dosyalarına sıkıştırma işlemi uygulanır. 
         - SCSS dosyaları tarayıcı uyumluluğu için Prefixer'dan geçirilir.
 ## Projeyi Kullanmaya başlamak için
+
+### Node Sürümü: V18.14.1
 
 Bu projeyi klonlayın
 
