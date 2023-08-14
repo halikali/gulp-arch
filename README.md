@@ -30,7 +30,9 @@ If the code that does not meet the specified standard cannot be automatically co
 ## To start using the Project
 
 ### Node Version: V18.14.1
-  
+
+**In order for the application to run successfully, you must use your node version with the version specified above.** 
+
 Clone this project
 
 ```bash
@@ -49,6 +51,14 @@ Download dependencies
 ```bash
   npm install
 ```
+
+## Or
+
+Through the terminal 
+```bash
+  npx create-gulp-arch <application_name>
+```
+command to install the dependencies automatically. **This method will automatically download the dependencies.**
 
 ## About File System
 - assets 
@@ -170,6 +180,8 @@ Bu proje Gulp ile modüler bir mimari kurgulamayı ve dosyaları sistematik bir 
 
 ### Node Sürümü: V18.14.1
 
+**Uygulamanın başarıyla çalışabilmesi için node verisyonunuzu yukarda belirtilen versiyon ile kullanmalısınız.** 
+
 Bu projeyi klonlayın
 
 ```bash
@@ -188,6 +200,15 @@ Bağımlılıklarını indirin
 ```bash
   npm install
 ```
+
+## yada 
+
+Terminal aracılığıyla 
+```bash
+  npx create-gulp-arch <uygulama_ismi>
+```
+komutuyla beraber kurulumu otomatik olarak yapabilirsiniz. **Bu yöntemde bağımlılıklar otomatik indirilecektir.**
+
 ## Dosyalama Sistemi Hakkında
 - assets 
 
