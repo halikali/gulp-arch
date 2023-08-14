@@ -180,7 +180,7 @@ Bu proje Gulp ile modüler bir mimari kurgulamayı ve dosyaları sistematik bir 
 
 ### Node Sürümü: V18.14.1
 
-**Uygulamanın başarıyla çalışabilmesi için node verisyonunuzu yukarda belirtilen versiyon ile kullanmalısınız.** 
+**Uygulamanın başarıyla çalışabilmesi için node versiyonunuzu yukarda belirtilen versiyon ile kullanmalısınız.** 
 
 Bu projeyi klonlayın
 
